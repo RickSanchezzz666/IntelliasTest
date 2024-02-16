@@ -1,4 +1,2 @@
-﻿  timeTrackingReport.cpp
-  IntelliasTest.vcxproj -> D:\Repos\IntelliasTest\x64\Debug\IntelliasTest.exe
-  'pwsh.exe' is not recognized as an internal or external command,
-  operable program or batch file.
+﻿  main.cpp
+D:\Repos\IntelliasTest\IntelliasTest\main.cpp(77,84): error C2110: '+': cannot add two pointers

@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="loggerModule.cpp" />
     <ClCompile Include="timeTrackingReport.hpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="timeTrackingReport.cpp" />
@@ -135,6 +136,9 @@
     <None Include="commaData.csv" />
     <None Include="inputData.csv" />
     <None Include="report.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="loggerModule.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

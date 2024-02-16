@@ -1,4 +1,5 @@
 #include "timeTrackingReport.hpp"
+#include "loggerModule.hpp"
 
 #include <iostream>
 #include <string>
@@ -6,6 +7,8 @@
 #include <sstream>
 #include <vector>
 #include <limits>
+#include <chrono>
+#include <ctime>
 
 TimeTrackingReport::TimeTrackingReport(const std::string& fileName) { 
 	try
@@ -33,6 +36,8 @@ void TimeTrackingReport::__readFile(const std::string& fileName) {
 
 		__delimiter  = __determineDelimiter(header);
 
+		auto startParsing = std::chrono::steady_clock::now();
+
 		std::string line;
 		while (std::getline(file, line)) {
 			std::vector<std::string> row;
@@ -46,10 +51,18 @@ void TimeTrackingReport::__readFile(const std::string& fileName) {
 
 		file.close();
 
+		auto endParsing = std::chrono::steady_clock::now();
+		auto parsingDuration = std::chrono::duration_cast<std::chrono::milliseconds>(endParsing - startParsing);
+
+		std::string message = "User read file with name: " + fileName + ".csv succesfully!";
+		Logger::logAction("File Read", message, "SUCCESS", parsingDuration);
+
 		__getReport(__fileDataStorage);
 	}
 	catch (const std::exception& err) {
 		std::cerr << "Error occured: " << err.what() << std::endl;
+		std::string message = "User attempted to read the file named: " + fileName + ".csv, but the Error occured: " + err.what();
+		Logger::logAction("File Read", message, "FAILED");
 		throw err;
 	}
 }
@@ -71,6 +84,8 @@ void TimeTrackingReport::__getReport(std::vector<std::vector<std::string>>& data
 		if (data.empty()) {
 			throw std::runtime_error("Report is empty!");
 		}
+
+		auto startParsing = std::chrono::steady_clock::now();
 
 		for (auto& elem : data) {
 			std::string outputLine;
@@ -105,10 +120,18 @@ void TimeTrackingReport::__getReport(std::vector<std::vector<std::string>>& data
 			}
 		}
 
+		auto endParsing = std::chrono::steady_clock::now();
+		auto parsingDuration = std::chrono::duration_cast<std::chrono::milliseconds>(endParsing - startParsing);
+
+		std::string message = "User got report from file named: " + __fileName + ".csv successfuly!";
+		Logger::logAction("Get Report", message, "SUCCESS", parsingDuration);
+
 	}
 	catch (const std::exception& err)
 	{
 		std::cerr << "Error occured: " << err.what() << std::endl;
+		std::string message = "User attempted to get report from file named: " + __fileName + ".csv, but the Error occured: " + err.what();
+		Logger::logAction("Get Report", message, "FAILED");
 		return;
 	}
 }
@@ -168,6 +191,8 @@ void TimeTrackingReport::printInitialData() {
 		while (std::getline(file, line)) {
 			std::cout << line << std::endl;
 		}
+
+		file.close();
 	}
 	catch (const std::exception& err)
 	{
@@ -225,6 +250,8 @@ void TimeTrackingReport::exportReport(const std::string& fileName) {
 			}
 		}
 
+		auto startParsing = std::chrono::steady_clock::now();
+
 		std::ofstream outputFile(name + ".csv");
 
 		if (!outputFile.is_open()) {
@@ -241,12 +268,20 @@ void TimeTrackingReport::exportReport(const std::string& fileName) {
 
 		outputFile.close();
 
+		auto endParsing = std::chrono::steady_clock::now();
+		auto parsingDuration = std::chrono::duration_cast<std::chrono::milliseconds>(endParsing - startParsing);
+
 		std::cout << "\nSuccessfully created Time Tracking Report! Name of a file: " + name + ".csv\n";
+
+		std::string message = "User successfully exported report to file named: " + name + ".csv";
+		Logger::logAction("Get Report", message, "SUCCESS", parsingDuration);
 
 	}
 	catch (const std::exception& err)
 	{
 		std::cerr << "Error occured: " << err.what() << std::endl;
+		std::string message = "User attempted to get export report from file named: " + __fileName + ".csv, but the Error occured: " + err.what();
+		Logger::logAction("Export Report", message, "FAILED");
 		return;
 	}
 }

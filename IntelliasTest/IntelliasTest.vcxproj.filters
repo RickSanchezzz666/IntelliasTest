@@ -24,10 +24,18 @@
     <ClCompile Include="timeTrackingReport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="loggerModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="inputData.csv" />
     <None Include="report.csv" />
     <None Include="commaData.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="loggerModule.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,12 +1,25 @@
 #include "timeTrackingReport.hpp"
+#include "loggerModule.hpp"
 
 #include <iostream>
 #include <string>
 #include <vector>
 #include <limits>
 
+void makeReport();
+
 int main() {
+	//Logger::createLogsFile();
+	//Logger::clearLogsFile();
+	makeReport();
+	return 0;
+}
+
+
+void makeReport() {
 	std::cout << "Welcome to Time Tracking Report application!\nActions available:\n1. Load input Data.\n2. Exit the program!\nChoose: ";
+	std::string message = "User opened a Time Tracking Report Application!";
+	Logger::logAction("Main App", message, "SUCCESS");
 	bool session = true;
 	while (session) {
 		int action;
@@ -42,8 +55,12 @@ int main() {
 						break;
 					}
 					case 4:
+					{
 						std::cout << "\nClosing application...";
-						return 0;
+						std::string message = "User closed a Time Tracking Report Application!";
+						Logger::logAction("Main App", message, "SUCCESS");
+						return;
+					}
 					default:
 						std::cin.clear();
 						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -57,12 +74,17 @@ int main() {
 				std::cerr << "File doesn't exist, wasn't found or wrong format(not CSV)!" << std::endl;
 				std::cerr << "Error: " << err.what() << std::endl;
 				std::cout << "\nClosing application...";
-				return 0;
+				std::string message = "Time Tracking Report Application closed due to error!";
+				Logger::logAction("Main App", message, "FAILED");
+				return;
 			}
 		}
-		case 2:
+		case 2: {
 			std::cout << "\nClosing application...";
-			return 0;
+			std::string message = "User closed a Time Tracking Report Application!";
+			Logger::logAction("Main App", message, "SUCCESS");
+			return;
+		}
 		default:
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -70,6 +92,4 @@ int main() {
 			break;
 		}
 	}
-
-	return 0;
 }

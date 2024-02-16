@@ -1,0 +1,17 @@
+Action; LogDescription; ParsingTime; Date; StatusMain App; User opened a Time Tracking Report Application!; 0 msec; 2024-2-16 22:3; SUCCESS
+File Read; User read file with name: inputData.csv succesfully!; 0 msec; 2024-2-16 22:3; SUCCESS
+Get Report; User got report from file named: inputData.csv.csv successfuly!; 0 msec; 2024-2-16 22:3; SUCCESS
+Get Report; User successfully exported report to file named: finalReport.csv; 0 msec; 2024-2-16 22:3; SUCCESS
+Main App; User closed a Time Tracking Report Application!; 0 msec; 2024-2-16 22:3; SUCCESS
+Main App; User opened a Time Tracking Report Application!; 0 msec; 2024-2-16 22:4; SUCCESS
+File Read; User attempted to read the file named: dsa.csv, but the Error occured: Unable to open file!; 0 msec; 2024-2-16 22:5; FAILED
+Main App; Time Tracking Report Application closed due to error!; 0 msec; 2024-2-16 22:5; FAILED
+Main App; User opened a Time Tracking Report Application!; 0 msec; 2024-2-16 22:5; SUCCESS
+File Read; User read file with name: commaReport.csv succesfully!; 0 msec; 2024-2-16 22:5; SUCCESS
+Get Report; User attempted to get report from file named: commaReport.csv.csv, but the Error occured: basic_string::substr: __pos (which is 5) > this->size() (which is 0); 0 msec; 2024-2-16 22:5; FAILED
+Main App; User closed a Time Tracking Report Application!; 0 msec; 2024-2-16 22:6; SUCCESS
+Main App; User opened a Time Tracking Report Application!; 0 msec; 2024-2-16 22:6; SUCCESS
+File Read; User read file with name: commaData.csv succesfully!; 0 msec; 2024-2-16 22:6; SUCCESS
+Get Report; User got report from file named: commaData.csv.csv successfuly!; 0 msec; 2024-2-16 22:6; SUCCESS
+Get Report; User successfully exported report to file named: commaFinalReport.csv; 0 msec; 2024-2-16 22:6; SUCCESS
+Main App; User closed a Time Tracking Report Application!; 0 msec; 2024-2-16 22:6; SUCCESS
