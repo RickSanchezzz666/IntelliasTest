@@ -1,0 +1,13 @@
+Name;email;department;position;project;task;date;logged hours
+John Doe;john.doe@company.com;Delivery;Software Engineer;Mars;MRS-2240;2021-10-19;5
+John Doe;john.doe@company.com;Delivery;Software Engineer;Mars;MRS-2241;2021-10-20;8
+Jane Lopez;jane.lopez@company.com;Delivery;Manager;Venus;VNS-1111;2021-10-20;4
+Alice Smith;alice.smith@company.com;Engineering;System Architect;Saturn;SAT-1234;2021-10-21;6
+Bob Johnson;bob.johnson@company.com;Marketing;Marketing Specialist;Jupiter;JUP-5678;2021-10-21;7
+John Doe;john.doe@company.com;Delivery;Software Engineer;Mars;MRS-2242;2021-10-21;4
+Jane Lopez;jane.lopez@company.com;Delivery;Manager;Venus;VNS-1112;2021-10-21;8
+Bob Johnson;bob.johnson@company.com;Marketing;Marketing Specialist;Jupiter;JUP-5679;2021-10-22;5
+Jane Lopez;jane.lopez@company.com;Delivery;Manager;Venus;VNS-1113;2021-10-22;3
+Bob Johnson;bob.johnson@company.com;Marketing;Marketing Specialist;Jupiter;JUP-5680;2021-10-23;6
+Alice Smith;alice.smith@company.com;Engineering;System Architect;Saturn;SAT-1235;2021-10-22;3
+Alice Smith;alice.smith@company.com;Engineering;System Architect;Saturn;SAT-1236;2021-10-23;8
