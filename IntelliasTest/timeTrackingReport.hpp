@@ -11,13 +11,20 @@ private:
 	std::vector<std::vector<std::string>> __fileDataStorage;
 	std::vector<std::string> __outputReport;
 
+	char __delimiter = ';';
+
 	void __readFile(const std::string& fileName);
 
-	void __getReport(std::vector<std::vector<std::string>> data);
+	char __determineDelimiter(const std::string& header);
 
-	std::string __convertDate(std::string date);
+	void __getReport(std::vector<std::vector<std::string>>& data);
 
-	std::string __getDateString(std::string month);
+	std::string __convertDate(const std::string& date);
+
+	std::string __getDateString(const std::string& month);
+
+	bool __checkExistence(const std::string& fileName);
+	
 
 public:
 	TimeTrackingReport(const std::string& fileName);

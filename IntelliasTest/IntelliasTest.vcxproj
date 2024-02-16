@@ -132,6 +132,7 @@
     <ClCompile Include="timeTrackingReport.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="commaData.csv" />
     <None Include="inputData.csv" />
     <None Include="report.csv" />
   </ItemGroup>

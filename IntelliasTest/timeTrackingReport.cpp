@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <limits>
 
 TimeTrackingReport::TimeTrackingReport(const std::string& fileName) { 
 	try
@@ -27,22 +28,21 @@ void TimeTrackingReport::__readFile(const std::string& fileName) {
 			throw std::runtime_error("Unable to open file!");
 		}
 
+		std::string header;
+		std::getline(file, header);
+
+		__delimiter  = __determineDelimiter(header);
+
 		std::string line;
-		bool skipHeader = true;
 		while (std::getline(file, line)) {
-			if (skipHeader) {
-				skipHeader = false;
-				continue;
-			}
 			std::vector<std::string> row;
 			std::stringstream ss(line);
 			std::string token;
-			while (std::getline(ss, token, ';')) {
+			while (std::getline(ss, token, __delimiter)) {
 				row.push_back(token);
 			}
 			__fileDataStorage.push_back(row);
 		}
-
 
 		file.close();
 
@@ -54,7 +54,18 @@ void TimeTrackingReport::__readFile(const std::string& fileName) {
 	}
 }
 
-void TimeTrackingReport::__getReport(std::vector<std::vector<std::string>> data) {
+char TimeTrackingReport::__determineDelimiter(const std::string& header) {
+	char delimiters[] = { ',', ';', ' ', '\t', '.', '|', ':' };
+	for (int i = 0; i < (sizeof(delimiters) / sizeof(delimiters[0])); i++) {
+		if (header.find(delimiters[i]) != std::string::npos) {
+			return delimiters[i];
+		}
+	}
+
+	return 0;
+}
+
+void TimeTrackingReport::__getReport(std::vector<std::vector<std::string>>& data) {
 	try
 	{
 		if (data.empty()) {
@@ -68,7 +79,7 @@ void TimeTrackingReport::__getReport(std::vector<std::vector<std::string>> data)
 			bool foundStatus = false;
 
 			if (__outputReport.empty()) {
-				outputLine = elem[0] + ";" + date + ";" + elem[7];
+				outputLine = elem[0] + __delimiter + date + __delimiter + elem[7];
 				__outputReport.push_back(outputLine);
 			}
 			else {
@@ -77,18 +88,18 @@ void TimeTrackingReport::__getReport(std::vector<std::vector<std::string>> data)
 						std::vector<std::string> row;
 						std::stringstream ss(line);
 						std::string token;
-						while (std::getline(ss, token, ';')) {
+						while (std::getline(ss, token, __delimiter)) {
 							row.push_back(token);
 						}
 						int hoursSpent = std::stoi(row[2]) + std::stoi(elem[7]);
-						line = row[0] + ";" + row[1] + ";" + std::to_string(hoursSpent);
+						line = row[0] + __delimiter + row[1] + __delimiter + std::to_string(hoursSpent);
 						foundStatus = true;
 						break;
 					}
 				}
 
 				if(!foundStatus) {
-					outputLine = elem[0] + ";" + date + ";" + elem[7];
+					outputLine = elem[0] + __delimiter + date + __delimiter + elem[7];
 					__outputReport.push_back(outputLine);
 				}
 			}
@@ -102,7 +113,7 @@ void TimeTrackingReport::__getReport(std::vector<std::vector<std::string>> data)
 	}
 }
 
-std::string TimeTrackingReport::__convertDate(std::string date) {
+std::string TimeTrackingReport::__convertDate(const std::string& date) {
 	std::string finalDate;
 	std::string year = date.substr(0, 4);
 	std::string month = __getDateString(date.substr(5, 2));
@@ -110,7 +121,7 @@ std::string TimeTrackingReport::__convertDate(std::string date) {
 	return finalDate;
 }
 
-std::string TimeTrackingReport::__getDateString(std::string month) {
+std::string TimeTrackingReport::__getDateString(const std::string& month) {
 	int monthInt = std::stoi(month);
 	switch (monthInt) {
 	case 1:
@@ -143,7 +154,6 @@ std::string TimeTrackingReport::__getDateString(std::string month) {
 }
 
 
-
 void TimeTrackingReport::printInitialData() {
 	try
 	{
@@ -168,22 +178,60 @@ void TimeTrackingReport::printInitialData() {
 
 void TimeTrackingReport::printReport() {
 	std::cout << "Your final report is: \n\n";
-	std::string header = "Name;Month;Total hours";
+	std::string header = "Name" + std::string (1, __delimiter) + "Month" + std::string(1, __delimiter) + "Total hours";
 	std::cout << header << std::endl;
 	for (auto& record : __outputReport) {
 		std::cout << record << std::endl;
 	}
 }
 
+bool TimeTrackingReport::__checkExistence(const std::string& fileName) {
+	std::ifstream outputFile(fileName + ".csv");
+	if (outputFile) return true;
+	return false;
+}
+
 void TimeTrackingReport::exportReport(const std::string& fileName) {
 	try
 	{
-		std::ofstream outputFile(fileName + ".csv");
+		std::string name = fileName;
+		if (__checkExistence(name)) {
+			std::cout << "\nFile with this name already exist!\nDo you wanna change it or override existing?\n1. Change name\n2. Override\nEnter: ";
+			bool session = true;
+			while (session) {
+				int action;
+				std::cin >> action;
+				switch (action)
+				{
+				case 1:
+					std::cout << "\nEnter new name: ";
+					std::cin >> name;
+					std::cin.clear();
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					session = false;
+					break;
+				case 2:
+					std::cout << "\nYou choosed to override existing!\n";
+					std::cin.clear();
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					session = false;
+					break;
+				default:
+					std::cerr << "\nWrong action! Try again!\n1. Change name\n2. Override\nEnter: ";
+					std::cin.clear();
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					break;
+				}
+			}
+		}
+
+		std::ofstream outputFile(name + ".csv");
+
 		if (!outputFile.is_open()) {
 			throw std::runtime_error("Unable to open file for writing!");
 		}
 
-		std::string header = "Name;Month;Total hours";
+		std::string header = "Name" + std::string(1, __delimiter) + "Month" + std::string(1, __delimiter) + "Total hours";
 
 		outputFile << header << "\n";
 
@@ -193,7 +241,7 @@ void TimeTrackingReport::exportReport(const std::string& fileName) {
 
 		outputFile.close();
 
-		std::cout << "\nSuccessfully created Time Tracking Report!\n";
+		std::cout << "\nSuccessfully created Time Tracking Report! Name of a file: " + name + ".csv\n";
 
 	}
 	catch (const std::exception& err)
