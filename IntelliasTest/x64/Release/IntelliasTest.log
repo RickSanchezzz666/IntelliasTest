@@ -1,0 +1,9 @@
+﻿  timeTrackingReport.hpp
+  main.cpp
+  timeTrackingReport.cpp
+x64\Release\timeTrackingReport.obj : warning LNK4042: object specified more than once; extras ignored
+main.obj : error LNK2001: unresolved external symbol "public: void __cdecl TimeTrackingReport::exportReport(void)" (?exportReport@TimeTrackingReport@@QEAAXXZ)
+main.obj : error LNK2001: unresolved external symbol "public: void __cdecl TimeTrackingReport::printReport(void)" (?printReport@TimeTrackingReport@@QEAAXXZ)
+main.obj : error LNK2001: unresolved external symbol "public: void __cdecl TimeTrackingReport::printInitialData(void)" (?printInitialData@TimeTrackingReport@@QEAAXXZ)
+main.obj : error LNK2001: unresolved external symbol "public: __cdecl TimeTrackingReport::TimeTrackingReport(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (??0TimeTrackingReport@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+D:\Repos\IntelliasTest\x64\Release\IntelliasTest.exe : fatal error LNK1120: 4 unresolved externals

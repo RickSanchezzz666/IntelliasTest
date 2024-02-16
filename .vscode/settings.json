@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "d:\\Repos\\IntelliasTest",
+            "binaryPath": "d:\\Repos\\IntelliasTest\\trackingReport",
+            "binaryArgs": []
+        }
+    ]
+}

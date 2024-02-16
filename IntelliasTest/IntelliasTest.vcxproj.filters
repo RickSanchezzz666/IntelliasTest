@@ -27,5 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="inputData.csv" />
+    <None Include="report.csv" />
   </ItemGroup>
 </Project>
